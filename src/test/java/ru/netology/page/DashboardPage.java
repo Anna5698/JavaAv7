@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
     private SelenideElement heading = $("[data-test-id=dashboard]");
@@ -33,14 +32,5 @@ public class DashboardPage {
     public TransferPage selectCardForTransfer(String toCardId) {
         $(String.format(cardSelector, toCardId)).find("button").click();
         return new TransferPage();
-    }
-
-    public String getCardIdByNumber(String cardNumber) {
-        if (cardNumber.equals(DataHelper.getFirstCardNumber())) {
-            return "92df3f1c-a033-48e6-8390-206f6b1f56c0";
-        } else if (cardNumber.equals(DataHelper.getSecondCardNumber())) {
-            return "0f3f5c2a-249e-4c3d-8287-09f7a039391d";
-        }
-        return "";
     }
 }

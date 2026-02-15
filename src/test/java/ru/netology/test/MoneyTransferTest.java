@@ -33,8 +33,11 @@ public class MoneyTransferTest {
     @Test
     @DisplayName("Should transfer money from first card to second")
     void shouldTransferMoneyFromFirstToSecond() {
-        var firstCardId = dashboardPage.getCardIdByNumber(DataHelper.getFirstCardNumber());
-        var secondCardId = dashboardPage.getCardIdByNumber(DataHelper.getSecondCardNumber());
+        var firstCardInfo = DataHelper.getFirstCardInfo();
+        var secondCardInfo = DataHelper.getSecondCardInfo();
+
+        var firstCardId = firstCardInfo.getId();
+        var secondCardId = secondCardInfo.getId();
 
         var firstCardBalance = dashboardPage.getCardBalance(firstCardId);
         var secondCardBalance = dashboardPage.getCardBalance(secondCardId);
@@ -42,7 +45,7 @@ public class MoneyTransferTest {
         var amount = DataHelper.getValidAmount(firstCardBalance);
 
         var transferPage = dashboardPage.selectCardForTransfer(secondCardId);
-        dashboardPage = transferPage.transferMoney(DataHelper.getFirstCardNumber(), String.valueOf(amount));
+        dashboardPage = transferPage.transferMoney(firstCardInfo.getNumber(), String.valueOf(amount));
 
         var firstCardBalanceAfter = dashboardPage.getCardBalance(firstCardId);
         var secondCardBalanceAfter = dashboardPage.getCardBalance(secondCardId);
@@ -54,8 +57,11 @@ public class MoneyTransferTest {
     @Test
     @DisplayName("Should transfer money from second card to first")
     void shouldTransferMoneyFromSecondToFirst() {
-        var firstCardId = dashboardPage.getCardIdByNumber(DataHelper.getFirstCardNumber());
-        var secondCardId = dashboardPage.getCardIdByNumber(DataHelper.getSecondCardNumber());
+        var firstCardInfo = DataHelper.getFirstCardInfo();
+        var secondCardInfo = DataHelper.getSecondCardInfo();
+
+        var firstCardId = firstCardInfo.getId();
+        var secondCardId = secondCardInfo.getId();
 
         var firstCardBalance = dashboardPage.getCardBalance(firstCardId);
         var secondCardBalance = dashboardPage.getCardBalance(secondCardId);
@@ -63,7 +69,7 @@ public class MoneyTransferTest {
         var amount = DataHelper.getValidAmount(secondCardBalance);
 
         var transferPage = dashboardPage.selectCardForTransfer(firstCardId);
-        dashboardPage = transferPage.transferMoney(DataHelper.getSecondCardNumber(), String.valueOf(amount));
+        dashboardPage = transferPage.transferMoney(secondCardInfo.getNumber(), String.valueOf(amount));
 
         var firstCardBalanceAfter = dashboardPage.getCardBalance(firstCardId);
         var secondCardBalanceAfter = dashboardPage.getCardBalance(secondCardId);
@@ -75,19 +81,24 @@ public class MoneyTransferTest {
     @Test
     @DisplayName("Should not transfer amount more than balance")
     void shouldNotTransferMoreThanBalance() {
-        var firstCardId = dashboardPage.getCardIdByNumber(DataHelper.getFirstCardNumber());
-        var secondCardId = dashboardPage.getCardIdByNumber(DataHelper.getSecondCardNumber());
+        var firstCardInfo = DataHelper.getFirstCardInfo();
+        var secondCardInfo = DataHelper.getSecondCardInfo();
+
+        var firstCardId = firstCardInfo.getId();
+        var secondCardId = secondCardInfo.getId();
 
         var firstCardBalance = dashboardPage.getCardBalance(firstCardId);
+        var secondCardBalance = dashboardPage.getCardBalance(secondCardId);
 
         var amount = firstCardBalance + 1000;
 
         var transferPage = dashboardPage.selectCardForTransfer(secondCardId);
-        transferPage.transferMoneyInvalid(DataHelper.getFirstCardNumber(), String.valueOf(amount));
+        transferPage.transferMoneyInvalid(firstCardInfo.getNumber(), String.valueOf(amount));
 
         var firstCardBalanceAfter = dashboardPage.getCardBalance(firstCardId);
         var secondCardBalanceAfter = dashboardPage.getCardBalance(secondCardId);
 
         assertEquals(firstCardBalance, firstCardBalanceAfter);
+        assertEquals(secondCardBalance, secondCardBalanceAfter);
     }
 }
