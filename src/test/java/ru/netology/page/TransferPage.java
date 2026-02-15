@@ -53,14 +53,7 @@ public class TransferPage {
      */
     public void checkErrorNotification() {
         errorNotification.shouldBe(Condition.visible);
-    }
-
-    /**
-     * Возвращает текст уведомления об ошибке
-     * @return текст ошибки
-     */
-    public String getErrorNotificationText() {
-        return errorNotification.text();
+        errorNotification.shouldNotBe(Condition.empty);
     }
 
     /**
@@ -70,21 +63,5 @@ public class TransferPage {
     public DashboardPage cancelTransfer() {
         cancelButton.click();
         return new DashboardPage();
-    }
-
-    /**
-     * Проверяет, что поле "Сумма" содержит определенное значение
-     * @param expectedValue ожидаемое значение
-     */
-    public void amountFieldShouldHaveValue(String expectedValue) {
-        amountField.shouldHave(Condition.value(expectedValue));
-    }
-
-    /**
-     * Проверяет, что поле "С карты" содержит определенное значение
-     * @param expectedValue ожидаемое значение
-     */
-    public void fromFieldShouldHaveValue(String expectedValue) {
-        fromField.shouldHave(Condition.value(expectedValue));
     }
 }

@@ -15,19 +15,12 @@ public class MoneyTransferTest {
 
     @BeforeEach
     void setup() {
-        Configuration.browser = "chrome";
-        Configuration.headless = false;
 
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         dashboardPage = verificationPage.validVerify(verificationCode);
-    }
-
-    @AfterEach
-    void tearDown() {
-        closeWebDriver();
     }
 
     @Test
