@@ -1,4 +1,4 @@
-package ru.netology.page;
+package page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -17,7 +17,7 @@ public class ReplenishCardPage {
     private final SelenideElement replenishCardField = $("[data-test-id='dashboard']");
     private final SelenideElement errorMsg = $("[data-test-id='error-notification'] .notification__content");
 
-    public ReplenishCardPage() {
+    public ReplenishCardPage(){
         replenishCardField.should(Condition.visible);
     }
 

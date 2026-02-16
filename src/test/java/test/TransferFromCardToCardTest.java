@@ -1,4 +1,4 @@
-package ru.netology.test;
+package test;
 
 import com.codeborne.selenide.Selenide;
 import data.DataHelper;
@@ -31,14 +31,14 @@ public class TransferFromCardToCardTest {
         String numberFirstCardWhere = personalAcoountPage.getNumberCard(getFirstCardInfo().getCardId());
         String numberSecondCardWhere = personalAcoountPage.getNumberCard(getSecondCardInfo().getCardId());
 
-        if (currentBalanceFirstCard != 10_000) {
+        if (currentBalanceFirstCard != 10_000){
             int sum = currentBalanceFirstCard - 10_000;
             if (sum > 0) {
                 var replenishCardPage = personalAcoountPage.getReplenishCard(getSecondCardInfo().getCardId());
-                var transfer = replenishCardPage.getMoneyTransfer(String.valueOf(sum), getFirstCardInfo().getNumber(), numberSecondCardWhere);
+                var transfer = replenishCardPage.getMoneyTransfer(String.valueOf(sum),getFirstCardInfo().getNumber(), numberSecondCardWhere);
             } else {
                 var replenishCardPage = personalAcoountPage.getReplenishCard(getFirstCardInfo().getCardId());
-                var transfer = replenishCardPage.getMoneyTransfer(String.valueOf(-sum), getSecondCardInfo().getNumber(), numberFirstCardWhere);
+                var transfer = replenishCardPage.getMoneyTransfer(String.valueOf(-sum),getSecondCardInfo().getNumber(), numberFirstCardWhere);
             }
         }
         clearTransactionForms();
@@ -62,8 +62,8 @@ public class TransferFromCardToCardTest {
         int balanceSecondCard = personalAcoountPage.getBalanceCard(getSecondCardInfo().getCardId());
         String numberFirstCardWhere = personalAcoountPage.getNumberCard(getFirstCardInfo().getCardId());
 
-        var replenishCardPage = personalAcoountPage.getReplenishCard(getFirstCardInfo().getCardId());
-        var transfer = replenishCardPage.getMoneyTransfer("1000", getSecondCardInfo().getNumber(), numberFirstCardWhere);
+        var replenishCardPage =  personalAcoountPage.getReplenishCard(getFirstCardInfo().getCardId());
+        var transfer = replenishCardPage.getMoneyTransfer("1000",getSecondCardInfo().getNumber(), numberFirstCardWhere);
 
         int balanceFirstCardAfterReplenishment = personalAcoountPage.getBalanceCard(getFirstCardInfo().getCardId());
         int balanceSecondCardAfterReplenishment = personalAcoountPage.getBalanceCard(getSecondCardInfo().getCardId());
@@ -77,9 +77,9 @@ public class TransferFromCardToCardTest {
         var personalAcoountPage = new PersonalAccountPage();
 
         String numberSecondCardWhere = personalAcoountPage.getNumberCard(getSecondCardInfo().getCardId());
-        var replenishCardPage = personalAcoountPage.getReplenishCard(getSecondCardInfo().getCardId());
+        var replenishCardPage =  personalAcoountPage.getReplenishCard(getSecondCardInfo().getCardId());
 
-        var transfer = replenishCardPage.getMoneyTransfer("12000", getFirstCardInfo().getNumber(), numberSecondCardWhere);
+        var transfer = replenishCardPage.getMoneyTransfer("12000",getFirstCardInfo().getNumber(), numberSecondCardWhere);
         replenishCardPage.getErrorMsg("Ошибка!");
     }
 
@@ -89,8 +89,22 @@ public class TransferFromCardToCardTest {
         var personalAcoountPage = new PersonalAccountPage();
 
         String numberSecondCardWhere = personalAcoountPage.getNumberCard(getSecondCardInfo().getCardId());
-        var replenishCardPage = personalAcoountPage.getReplenishCard(getSecondCardInfo().getCardId());
+        var replenishCardPage =  personalAcoountPage.getReplenishCard(getSecondCardInfo().getCardId());
 
         var transfer = replenishCardPage.getMoneyTransfer("2000", String.valueOf(RandomCardInfo.generateCardInfo("ru").getNumber()), numberSecondCardWhere);
         replenishCardPage.getErrorMsg("Ошибка!");
     }
+
+    @Test
+    @DisplayName("Перевод c карты 0001 на карту 0001: ожидаем сообщение об ошибке")
+    public void shouldShowErrorWhenTransferToTheSameCard() {
+        var personalAcoountPage = new PersonalAccountPage();
+
+        String numberFirstCardWhere = personalAcoountPage.getNumberCard(getFirstCardInfo().getCardId());
+        var replenishCardPage =  personalAcoountPage.getReplenishCard(getFirstCardInfo().getCardId());
+
+        var transfer = replenishCardPage.getMoneyTransfer("2000",getFirstCardInfo().getNumber(), numberFirstCardWhere);
+        replenishCardPage.getErrorMsg("Ошибка!");
+    }
+
+}
