@@ -18,10 +18,13 @@ repositories {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.2'
     testImplementation 'com.codeborne:selenide:6.19.1' // Selenide
     testCompileOnly 'org.projectlombok:lombok:1.18.36' // lombok
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
     testImplementation 'org.slf4j:slf4j-simple:2.0.3' // логирование
+    testImplementation 'io.cucumber:cucumber-java:7.1.0' // cucumber
+    testImplementation 'io.cucumber:cucumber-junit:7.1.0'
     testImplementation 'com.github.javafaker:javafaker:1.0.2' // Faker
 }
 

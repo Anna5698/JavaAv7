@@ -6,26 +6,16 @@ import lombok.Value;
 import java.util.Locale;
 
 public class DataHelper {
-    private static final Faker faker = new Faker(new Locale("en"));
 
-    private DataHelper() {
+    private DataHelper(){
     }
 
-    @Value
-    public static class AuthInfo {
-        String login;
-        String password;
+    public static AuthUser getAuthUser() {
+        return new AuthUser("vasya","qwerty123");
     }
 
-    @Value
-    public static class VerificationCode {
-        String code;
-    }
-
-    @Value
-    public static class CardInfo {
-        String number;
-        String id;
+    public static VerificationCode getverificationCode(AuthUser authUser) {
+        return new VerificationCode("12345");
     }
 
     public static CardInfo getFirstCardInfo() {
@@ -36,15 +26,40 @@ public class DataHelper {
         return new CardInfo("5559 0000 0000 0002", "0f3f5c2a-249e-4c3d-8287-09f7a039391d");
     }
 
-    public static AuthInfo getAuthInfo() {
-        return new AuthInfo("vasya", "qwerty123");
+    public static String generateNumberCard(Faker faker) {
+        return faker.finance().creditCard();
     }
 
-    public static VerificationCode getVerificationCodeFor(AuthInfo authInfo) {
-        return new VerificationCode("12345");
+    public static String generateIdCard(Faker faker) {
+        return faker.number().digits(36);
     }
 
-    public static int getValidAmount(int balance) {
-        return faker.number().numberBetween(1, Math.max(balance, 1));
+    public static class RandomCardInfo {
+        private static Faker faker;
+
+        private RandomCardInfo() {
+        }
+
+        public static CardInfo generateCardInfo(String locale) {
+            faker = new Faker(new Locale(locale));
+            return new CardInfo(generateNumberCard(faker), generateIdCard(faker));
+        }
+    }
+
+    @Value
+    public static class AuthUser {
+        String login;
+        String password;
+    }
+
+    @Value
+    public static class VerificationCode {
+        String verificationCode;
+    }
+
+    @Value
+    public static class CardInfo {
+        String number;
+        String cardId;
     }
 }

@@ -1,19 +1,23 @@
-package ru.netology.page;
+package page;
 
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.data.DataHelper;
+import data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
-    private SelenideElement loginField = $("[data-test-id=login] input");
-    private SelenideElement passwordField = $("[data-test-id=password] input");
-    private SelenideElement loginButton = $("[data-test-id=action-login]");
+    private final SelenideElement loginField = $("[data-test-id='login'] input");
+    private final SelenideElement passwordField = $("[data-test-id='password'] input");
+    private final SelenideElement buttonLogin = $("[data-test-id='action-login']");
 
-    public VerificationPage validLogin(DataHelper.AuthInfo authInfo) {
-        loginField.setValue(authInfo.getLogin());
-        passwordField.setValue(authInfo.getPassword());
-        loginButton.click();
+    public VerificationPage loginUser(DataHelper.AuthUser user) {
+        login(user);
         return new VerificationPage();
+    }
+
+    public void login(DataHelper.AuthUser user) {
+        loginField.setValue(user.getLogin());
+        passwordField.setValue(user.getPassword());
+        buttonLogin.click();
     }
 }
