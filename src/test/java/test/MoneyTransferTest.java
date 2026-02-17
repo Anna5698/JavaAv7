@@ -1,14 +1,14 @@
 package test;
 
+import data.DataHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import data.DataHelper;
 import page.DashboardPage;
 import page.LoginPage;
 
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static data.DataHelper.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoneyTransferTest {
 
@@ -44,6 +44,7 @@ public class MoneyTransferTest {
         assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard);
         assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
     }
+
     @Test
     void shouldGetErrorMassageIfAmountMoreBalance() {
         var amount = generateInvalidAmount(secondCarBalance);

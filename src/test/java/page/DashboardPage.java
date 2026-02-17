@@ -1,9 +1,10 @@
 package page;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.val;
 import data.DataHelper;
+import lombok.val;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
@@ -20,10 +21,12 @@ public class DashboardPage {
     public DashboardPage() {
         heading.shouldBe(visible);
     }
+
     public int getCardBalance(DataHelper.CardInfo cardInfo) {
         val text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
         return extractBalance(text);
     }
+
     /* public int getCardBalance(int index) {
          var text = cards.get(index).getText();
          return extractBalance(text);
@@ -32,6 +35,7 @@ public class DashboardPage {
         cards.findBy(attribute("data-test-id", cardInfo.getTestId())).$("button").click();
         return new TransferPage();
     }
+
     private int extractBalance(String text) {
         val start = text.indexOf(balanceStart);
         val finish = text.indexOf(balanceFinish);
